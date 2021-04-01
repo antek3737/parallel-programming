@@ -155,13 +155,13 @@ int main(int argc ,char * argv[])
 
     for(int j=0; j<numberOfClients; j++)
     {
-	    PIDchild=wait(&status);
+	PIDchild=wait(&status);
         
         if (PIDchild  == -1)
         {
             perror("ERROR. Wait() error.");
             exit(1);
-		}
+	}
                  
     }  
 
