@@ -1,10 +1,10 @@
-ENG: 
+##### ENG: 
 Project consists of two independently starting up programs: manufacturer and consumer.
 Manufacturer sends chars from file named "input.txt".
 Consumer receives chars from manufacturer and saves them into a file named "result.txt"
 Functionality of the project is mainly based on semaphores and shared memory.
 
-PL:
+##### PL:
 Projekt składa się z dwóch programów uruchamianych niezależnie: producenta i konsumenta.
 Producent wysyła po jednym znaku z pliku "input.txt" do pamięci dzielonej.
 Konsument pobiera znak i zapisuje go do pliku.
