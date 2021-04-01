@@ -1,27 +1,24 @@
-The project consists of two independent programs: manufacturer and consumer. 
-Manufacturer creates defined number of processes that are sending defined number of chars and putting it into their files named "in_PID.txt".
-Then, created processes are waiting till all chars have been received by consumers.
-Consumer creates defined number of processes that are receiving chars and putting it into their files calles "out_PID.txt".
-The project is using mainly named pipe (fifo).
+<b> ENG: <\b>
+<p>
+The project consists of two independently starting up programs: manufacturer and consumer. 
+  Manufacturer creates defined number of processes that are sending defined number of chars and saving them into their files named "in_PID.txt".
+Then, manufacturer waits till all processes  have been ended.
+  Consumer creates defined number of processes that are receiving chars and putting it into their files calles "out_PID.txt".
+Then, consumer aits till all processes  have been ended.
+  Moreover, each program checks if the limit of running processes will not be exceed.
+  When the last char is received, one of processes remote pipe.
+  Functionality of the project is mainly based on named pipe(fifo).
+  <\p>
 
-
-Wykorzystując potoki nazwane (fifo) uogólnić zadanie producent–konsument na wielu producentów i
-wielu konsumentów. W zadaniu wykorzystać jedno łącze nazwane.
-Projekt składa się z dwóch programów (plików): producent i konsument. Programy uruchamiane
-niezależnie.
-Argumentem wywołania programu producent jest liczba producentów oraz liczba znaków
-„wyprodukowanych” przez każdego producenta (np. ./producent 50 1000). Program producenta
-tworzy określoną liczbę procesów, które zapisują dane do potoku, a następnie czeka na ich
+<b> PL:<\b>
+<p>
+Projekt składa się z dwóch programów uruchamianych niezależnie: producenta i konsumenta.
+  Producent tworzy określoną liczbę procesów, które wysyłają  określoną liczbę znaków  do potoku oraz zapisują je do swojego pliku o nazwie "in_PID.txt", a następnie czeka na ich
 zakończenie.
-Argumentem wywołania programu konsument jest liczba konsumentów (np. ./konsument 30).
-Program konsumenta tworzy określoną liczbę procesów, które odczytują dane z potoku, a następnie
+  Konsument tworzy określoną liczbę procesów, które odczytują znaki z potoku i zapisują je do swojego pliku o nazwie "out_PID.txt", a następnie
 czeka na ich zakończenie.
-Programy sprawdzają dopuszczalny limit procesów, które może użytkownik uruchomić w danym
-momencie i w przypadku, kiedy limit jest większy lub równy liczbie tworzonych procesów, uruchamia
-zadanie.
-Każdy z producentów losuje określoną drugim argumentem wywołania liczbę znaków. Wylosowane
-znaki zapisuje – po jednym znaku - do potoku oraz swojego pliku z danymi (np. we_1250.txt, gdzie
-podany numer to pid procesu, który utworzył dany plik). Każdy z konsumentów odczytuje po jednym
-znaku z potoku i zapisuje w swoim pliku z wynikami (np.: wy_1320.txt). Po zakończeniu zadana liczba
-znaków we wszystkich plikach we_*.txt musi się równać liczbie znaków we wszystkich plikach wy_*.txt.
-Po zakończeniu zadania (pobraniu z łącza ostatniego znaku) jeden z procesów usuwa utworzone łącze. 
+  Programy sprawdzają dopuszczalny limit procesów, które może użytkownik uruchomić w danym
+momencie.
+  Po pobraniu z łącza ostatniego znaku, jeden z procesów usuwa utworzone łącze. 
+  Projekt oparty jest głównie o łącze nazwane(fifo).
+<\p>
