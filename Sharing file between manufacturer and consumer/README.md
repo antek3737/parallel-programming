@@ -1,5 +1,5 @@
 ENG: 
-Project consists of two independently working programs: manufacturer and consumer.
+Project consists of two independently starting up programs: manufacturer and consumer.
 Manufacturer sends chars from file named "input.txt".
 Consumer receives chars from manufacturer and saves them into a file named "result.txt"
 Functionality of the project is mainly based on semaphores and shared memory.
