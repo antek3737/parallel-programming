@@ -1,5 +1,4 @@
-<b> ENG: <\b>
-<p>
+##### ENG:
 The project consists of two independently starting up programs: manufacturer and consumer. 
   Manufacturer creates defined number of processes that are sending defined number of chars and saving them into their files named "in_PID.txt".
 Then, manufacturer waits till all processes  have been ended.
@@ -8,10 +7,8 @@ Then, consumer aits till all processes  have been ended.
   Moreover, each program checks if the limit of running processes will not be exceed.
   When the last char is received, one of processes remote pipe.
   Functionality of the project is mainly based on named pipe(fifo).
-  <\p>
 
-<b> PL:<\b>
-<p>
+##### PL:
 Projekt składa się z dwóch programów uruchamianych niezależnie: producenta i konsumenta.
   Producent tworzy określoną liczbę procesów, które wysyłają  określoną liczbę znaków  do potoku oraz zapisują je do swojego pliku o nazwie "in_PID.txt", a następnie czeka na ich
 zakończenie.
