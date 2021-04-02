@@ -7,8 +7,10 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <errno.h>
+
 #define SERVER 1
 #define MAX 400
+
 int queueID;
 int clientPID;
 pthread_t tid_send;

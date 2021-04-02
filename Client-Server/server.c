@@ -8,8 +8,10 @@
 #include <unistd.h>
 #include <signal.h>
 #include <errno.h>
+
 #define SERVER 1
 #define MAX 400 
+
 int queueID;
 int serverPID;
 
