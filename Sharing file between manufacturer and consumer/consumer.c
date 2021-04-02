@@ -16,8 +16,8 @@ int main()
 	}
 
    	printf("File has been created.\n");	 
-   	int semID=create_new_semaphore_set(1017,2);
- 	int buffid=shmget(3745, 1, IPC_CREAT|0666);
+   	int semID = create_new_semaphore_set(1017, 2);
+ 	int buffid = shmget(3745, 1, IPC_CREAT|0666);
 	
 	if(buffid == -1)
 	{
@@ -28,40 +28,40 @@ int main()
  		printf("Shared memory has been created: %d \n",buffid);
  	}
   	
-	void * buffptr=shmat(buffid,0,0);
+	void * buffptr = shmat(buffid,0,0);
  	
-	if(buffptr==(void*)-1)
+	if(buffptr == (void*)-1)
 	{
   		printf("Shared memory couldn't be attached.\n");
    	}
     else
 	{
-		printf("Shared memory has been attached. : %p\n",buffptr);
+		printf("Shared memory has been attached. : %p\n", buffptr);
 	}
 	
-	semaphore_v(semID,1);
-	char c='a';
+	semaphore_v(semID, 1);
+	char c = 'a';
 	while(1)
 	{
-		semaphore_p(semID,0);
-		if(*(char*)buffptr==EOF)
+		semaphore_p(semID, 0);
+		if(*(char*)buffptr == EOF)
 		{
-			semaphore_v(semID,1);
+			semaphore_v(semID, 1);
 			break;
 		}
 		else
 		{
-			c=*(char*)buffptr;
-			printf("Received c:%c\n",c);
-			fprintf(file,"%c",c);
-			semaphore_v(semID,1);
+			c = *(char*)buffptr;
+			printf("Received c:%c\n", c);
+			fprintf(file,"%c", c);
+			semaphore_v(semID, 1);
 		}
 	}
 
 	printf("Receiving from manufacturer has ended. \n");
 	fclose(file);
 	
-	if( shmdt(buffptr)==-1)
+	if( shmdt(buffptr) == -1)
 	{
 		printf("Semaphore set couldn't be detached");
 	}
