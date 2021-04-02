@@ -138,7 +138,7 @@ int main(int argc, char * argv[])
         switch (fork())
         {
         case -1:
-           perror("Fork error\n");
+            perror("Fork error\n");
         break;
 
         case 0: 

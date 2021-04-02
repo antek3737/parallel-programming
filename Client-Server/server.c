@@ -57,7 +57,6 @@ int main()
 
     if ((msgrcv(queueID, &msg, MAX + sizeof(msg.mtype1), SERVER, MSG_NOERROR)) == -1)
     {
-
       perror("Error server couldn't received message. \n");
       exit(EXIT_FAILURE);
     }

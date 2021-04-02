@@ -139,14 +139,14 @@ int main(int argc ,char * argv[])
         switch (fork())
         {
         case -1:
-        printf("FORK error\n");
+            printf("FORK error\n");
         break;
         
         case 0: 
-        file = createFile();
-        fillFileWithSent(file,limit);
-        closeFile(file);        
-        exit(EXIT_SUCCESS);  
+            file = createFile();
+            fillFileWithSent(file,limit);
+            closeFile(file);        
+            exit(EXIT_SUCCESS);  
         break;
         }
 

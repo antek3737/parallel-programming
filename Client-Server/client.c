@@ -23,8 +23,10 @@ struct message
   char mtext[MAX];
 };
 
-void sending(struct message *toSend){
+void sending(struct message *toSend)
+{
     int ret;
+    
     do {
         ret = msgsnd(queueID, toSend, MAX + sizeof(long int), IPC_NOWAIT);
         if(ret != -1)
@@ -41,7 +43,6 @@ void sending(struct message *toSend){
 
 void *send(void *ptr)
 {
-
   struct message toSend;
   while (2)
   {
