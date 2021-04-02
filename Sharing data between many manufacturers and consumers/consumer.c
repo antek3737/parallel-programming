@@ -8,12 +8,13 @@
 #include <time.h>
 #include <limits.h>
 #include <fcntl.h>
+
 #define fifo "./fifo"
 
 FILE * createFile()
 {
     char PIDtext[20];
-    sprintf(PIDtext,"%s%d%s","out_",getpid(),".txt");
+    sprintf(PIDtext, "%s%d%s", "out_", getpid(), ".txt");
 
     FILE *f = fopen(PIDtext, "w");
 
@@ -34,13 +35,13 @@ void fillFileWithReceived(FILE * f,int fd)
    
     while(1)
     {    
-        int test=read(fd,&c,sizeof(char));
-        if(test<0)
+        int test = read(fd, &c, sizeof(char));
+        if(test < 0)
         {
             perror("Read error\n");
             exit(EXIT_FAILURE);
         }
-        else if(test==0)
+        else if(test == 0)
         {
             printf("There is no more char to get\n");
             close(fd);
@@ -49,7 +50,7 @@ void fillFileWithReceived(FILE * f,int fd)
         else
         {
             printf("RECEIVING:%c\n",c);
-            fputc(c,f);   
+            fputc(c, f);   
         }
     }
 
@@ -59,7 +60,7 @@ void fillFileWithReceived(FILE * f,int fd)
 
 void closeFile(FILE * f)
 {
-    if(fclose(f)!=0)
+    if(fclose(f) != 0)
     {
         printf("Error file couldn't be closed.\n");
     }
@@ -69,51 +70,51 @@ void closeFile(FILE * f)
 }
 
 
-int main(int argc ,char * argv[])
+int main(int argc, char * argv[])
 {
-    unsigned long numberOfClients=strtoul(argv[1],NULL,10);
+    unsigned long numberOfClients=strtoul(argv[1], NULL, 10);
     
-    if(numberOfClients==0)
+    if(numberOfClients == 0)
     {
-        if(errno==ERANGE)
+        if(errno == ERANGE)
         {
             printf("The maximum size has been exceeded\n");
             exit(EXIT_FAILURE);
         }
     }
 
-    if(numberOfClients>INT_MAX)
+    if(numberOfClients > INT_MAX)
     {
         printf("Error the number of clients is too much\n");
         exit(EXIT_FAILURE);
     }
 
     int status;
-    int PIDchild;
+    int childPID;
     int res;
 
-    printf("Number of clients:%ld\n",numberOfClients);
+    printf("Number of clients:%ld\n", numberOfClients);
 
     char buff[256];
     FILE * fp_in;
     fp_in=popen("ps ux | wc -l ", "r");
 
-    fgets(buff,256,fp_in);
+    fgets(buff, 256, fp_in);
     
-    int number_of_processes=atoi(buff);
-    int maxOfProcesses=200;
+    int number_of_processes = atoi(buff);
+    int maxOfProcesses = 200;
     
     pclose(fp_in);
 
-    if(maxOfProcesses<number_of_processes)
+    if(maxOfProcesses < number_of_processes)
     {
         printf("The limit of processes has been exceeded, I can not start program.");
         exit(EXIT_FAILURE);
     }
 
-    if(mkfifo(fifo,0666)==-1)
+    if(mkfifo(fifo, 0666) == -1)
     {
-        if(errno==EEXIST)
+        if(errno == EEXIST)
         {
             printf("Fifo already eexist\n");
         }
@@ -123,16 +124,16 @@ int main(int argc ,char * argv[])
         printf("Client has made fifo\n");
     }
 
-    int fd=open(fifo,O_RDONLY);
+    int fd=open(fifo, O_RDONLY);
 
-    if(fd<0)
+    if(fd < 0)
     {
       exit(EXIT_FAILURE);
     }
 
     FILE * file;
     
-    for(int i=0; i<numberOfClients;i++)
+    for(int i=0; i<numberOfClients; i++)
     {
         switch (fork())
         {
@@ -146,18 +147,15 @@ int main(int argc ,char * argv[])
             closeFile(file);     
             exit(EXIT_SUCCESS);  
         break;
-        
-        default:
-        break;
-        
         }
+
     } 
 
     for(int j=0; j<numberOfClients; j++)
     {
-	PIDchild=wait(&status);
+	childPID = wait(&status);
         
-        if (PIDchild  == -1)
+        if (childPID  == -1)
         {
             perror("ERROR. Wait() error.");
             exit(1);
