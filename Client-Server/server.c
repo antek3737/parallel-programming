@@ -8,10 +8,10 @@
 #include <unistd.h>
 #include <signal.h>
 #include <errno.h>
-#define SERWER 1
+#define SERVER 1
 #define MAX 400 
-int IDqueue;
-int PIDserver;
+int queueID;
+int serverPID;
 
 struct message
 {
@@ -23,7 +23,7 @@ struct message
 void handler(int sig)
 {
   printf("SIGNAL SIGINT\n");
-  if (msgctl(IDqueue, IPC_RMID, 0) == -1)
+  if (msgctl(queueID, IPC_RMID, 0) == -1)
   {
     printf("Error queue couldn't be deleted. \n");
   }
@@ -36,24 +36,24 @@ int main()
 
   signal(SIGINT, handler);
 
-  PIDserver = getpid();
+  serverPID = getpid();
 
   key_t key = ftok(".", 'F');
 
-  if ((IDqueue = msgget(key, IPC_CREAT | 0777)) == -1)
+  if ((queueID = msgget(key, IPC_CREAT | 0777)) == -1)
   {
     perror("Error queue couldn't be created\n");
     exit(EXIT_FAILURE);
   }
   else
   {
-    printf("ID queue=%d \n", IDqueue);
+    printf("ID queue=%d \n", queueID);
   }
 
   while (1)
   {
 
-    if ((msgrcv(IDqueue, &msg, MAX + sizeof(msg.mtype1), SERWER, MSG_NOERROR)) == -1)
+    if ((msgrcv(queueID, &msg, MAX + sizeof(msg.mtype1), SERVER, MSG_NOERROR)) == -1)
     {
 
       perror("Error server couldn't received message. \n");
@@ -69,10 +69,10 @@ int main()
     }
 
     msg.mtype = msg.mtype1;        
-    msg.mtype1 = (long)PIDserver; 
+    msg.mtype1 = (long)serverPID; 
     printf("Server:sending: \n %s \n mtype %ld \n mtype1 %ld \n", msg.mtext, msg.mtype, msg.mtype1);
 
-    if ((msgsnd(IDqueue, &msg, sizeof(msg.mtext) + sizeof(msg.mtype1) + 1, 0)) == -1)
+    if ((msgsnd(queueID, &msg, sizeof(msg.mtext) + sizeof(msg.mtype1) + 1, 0)) == -1)
     {
       perror("Error couldn't add message to queue.\n");
       exit(EXIT_FAILURE);
