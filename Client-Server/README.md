@@ -1,5 +1,5 @@
 ##### ENG:
-Project consists of two programs that are starting up independently:server and client.
+Project consists of two programs that are starting up independently: server and client.
 Client sends a string to the server, then server receives  and processes it into uppercase string and sends it back.
 After that, client prints received string.
 The main functionality is using threads and message queue.
